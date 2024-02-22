@@ -1,5 +1,5 @@
 import inquirer from "inquirer";
-import { fetchData } from "./fetchPokemon.js";
+import { fetchName } from "./fetchPokemon.js";
 
 const questions = [
   {
@@ -21,9 +21,16 @@ const questions = [
 ];
 
 const prompt_user = () => {
-  inquirer.prompt(questions).then((answers) => {
-    fetchData(answers);
-  });
+  inquirer
+    .prompt(questions[0])
+    .then((name) => {
+      fetchName(name);
+    })
+    .then(() => {
+      inquirer.prompt(questions[1]).then((info) => {
+        console.log(info);
+      });
+    });
 };
 
 export { prompt_user };
