@@ -1,0 +1,16 @@
+{
+  "name": "pokemon-cli-downloader",
+  "version": "1.0.0",
+  "description": "A simple CLI program to download information about your favorite pokemon.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^9.2.15",
+    "node-fetch": "^3.3.2"
+  },
+  "type": "module"
+}
