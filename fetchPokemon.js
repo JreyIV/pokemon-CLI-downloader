@@ -8,7 +8,7 @@ const fetchName = (name) => {
   const pokemon_url = fetch(
     `https://pokeapi.co/api/v2/pokemon/${selected_pokemon}`
   );
-  //   console.log(`Fetching data for ${selected_pokemon}`);
+  console.log(`Fetching data for ${selected_pokemon}`);
   getData(pokemon_url);
 };
 
@@ -17,9 +17,14 @@ const getData = async (url) => {
     const result = await url;
     const poke_json = await result.json();
     return poke_json;
+    // something here? ^
   } catch (error) {
     console.log("Cannot find selected pokemon. Please try again");
   }
 };
 
 export { fetchName };
+
+//TODO:
+// -check which info the user selected
+// -fetch data using poke_json from getData() according to the selected info
