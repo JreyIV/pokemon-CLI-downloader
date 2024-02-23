@@ -1,12 +1,14 @@
 import fetch from "node-fetch";
 
+// get input from inquirer and pass it to getData to fetch data on specified pokemon
 const fetchName = (name) => {
   const selected_pokemon = Object.values(name)[0].toLowerCase();
-  console.log(selected_pokemon);
+  //   *for testing purposes*
+  //   console.log(selected_pokemon);
   const pokemon_url = fetch(
     `https://pokeapi.co/api/v2/pokemon/${selected_pokemon}`
   );
-  console.log(`Fetching data for ${selected_pokemon}`);
+  //   console.log(`Fetching data for ${selected_pokemon}`);
   getData(pokemon_url);
 };
 
@@ -14,7 +16,7 @@ const getData = async (url) => {
   try {
     const result = await url;
     const poke_json = await result.json();
-    console.log(poke_json);
+    return poke_json;
   } catch (error) {
     console.log("Cannot find selected pokemon. Please try again");
   }
