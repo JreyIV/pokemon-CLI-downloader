@@ -21,16 +21,14 @@ const questions = [
 ];
 
 const prompt_user = () => {
-  inquirer
-    .prompt(questions[0])
-    .then((name) => {
-      fetchName(name);
-    })
-    .then(() => {
-      inquirer.prompt(questions[1]).then((info) => {
-        console.log(info);
-      });
-    });
+  inquirer.prompt(questions[0]).then((name) => {
+    fetchName(name);
+  });
+  // .then(() => {
+  //   inquirer.prompt(questions[1]).then((info) => {
+  //     console.log(info);
+  //   });
+  // });
 };
 
 export { prompt_user };
