@@ -1,5 +1,5 @@
 import inquirer from "inquirer";
-import { getPokemonURL } from "./fetchPokemon.js";
+import { getPokemonData } from "./fetchPokemon.js";
 
 const prompt_poke_name = async () => {
   return await inquirer.prompt({
@@ -12,7 +12,7 @@ const prompt_poke_name = async () => {
       try {
         const response = await fetch(url);
         if (!response.ok) {
-          return "unknown pokemon";
+          return `Cannot find "${pokemon_name}" in the database. Please try again.`;
         }
         return true;
       } catch (err) {
@@ -41,10 +41,11 @@ const prompt_new_pokemon = async () => {
 
 const prompt_user = async () => {
   const getName = await prompt_poke_name();
+  const getInfo = await prompt_poke_info();
+
   console.log(getName);
-  const getData = await getPokemonURL(getName);
-  console.log(getData);
-  //   const getInfo = await prompt_poke_info();
+
+  const getData = await getPokemonData(getName, getInfo);
   //   console.log(getInfo);
   //   const getNew = await prompt_new_pokemon();
   //   console.log(getNew);
