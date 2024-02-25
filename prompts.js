@@ -43,7 +43,7 @@ const prompt_user = async () => {
   const getName = await prompt_poke_name();
   const getInfo = await prompt_poke_info();
 
-  console.log(getName);
+  //   console.log(getName);
 
   const getData = await getPokemonData(getName, getInfo);
   //   console.log(getInfo);
