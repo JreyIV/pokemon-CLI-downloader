@@ -35,7 +35,8 @@ const prompt_new_pokemon = async () => {
   return await inquirer.prompt({
     name: "pokemon_new",
     message: "Would you like to search for another pokemon?",
-    type: "confirm",
+    type: "list",
+    choices: ["Yes", "No"],
   });
 };
 
