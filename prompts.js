@@ -43,14 +43,8 @@ const prompt_new_pokemon = async () => {
 const prompt_user = async () => {
   const getName = await prompt_poke_name();
   const getInfo = await prompt_poke_info();
-
-  //   console.log(getName);
-
   const getData = await getPokemonData(getName, getInfo);
-  //   console.log(getInfo);
-  //   const getNew = await prompt_new_pokemon();
-  //   console.log(getNew);
-  //   process.exit();
+  process.exit();
 };
 
 export { prompt_user };
