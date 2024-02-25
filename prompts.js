@@ -44,16 +44,12 @@ const prompt_user = async () => {
   const getInfo = await prompt_poke_info();
 
   //   console.log(getName);
-  await getPokemonData(getName, getInfo);
 
-  const getNew = await prompt_new_pokemon();
-
-  if (getNew.pokemon_new) {
-    prompt_user();
-  } else {
-    console.log("Exiting...");
-    process.exit();
-  }
+  const getData = await getPokemonData(getName, getInfo);
+  //   console.log(getInfo);
+  //   const getNew = await prompt_new_pokemon();
+  //   console.log(getNew);
+  //   process.exit();
 };
 
 export { prompt_user };
