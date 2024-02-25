@@ -35,15 +35,18 @@ const prompt_new_pokemon = async () => {
   return await inquirer.prompt({
     name: "pokemon_new",
     message: "Would you like to search for another pokemon?",
-    type: "list",
-    choices: ["Yes", "No"],
+    type: "confirm",
   });
 };
 
 const prompt_user = async () => {
-  const getName = await prompt_poke_name();
-  const getInfo = await prompt_poke_info();
-  const getData = await getPokemonData(getName, getInfo);
+  while (true) {
+    const getName = await prompt_poke_name();
+    const getInfo = await prompt_poke_info();
+    await getPokemonData(getName, getInfo);
+    const { pokemon_new } = await prompt_new_pokemon();
+    if (!pokemon_new) break;
+  }
   process.exit();
 };
 

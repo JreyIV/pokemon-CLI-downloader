@@ -14,19 +14,19 @@ const getPokemonData = async (selected_pokemon, selected_info) => {
   const folderName = `${chosen_pokemon}`;
   const folderPath = path.join(__dirname, folderName);
   const info_array = Object.values(selected_info)[0];
-  info_array.forEach((info) => {
+  for (const info of info_array) {
     switch (info) {
       case "Stats":
-        downloadStats(folderPath, data);
+        await downloadStats(folderPath, data);
         break;
       case "Sprites":
-        downloadSprites(folderPath, data);
+        await downloadSprites(folderPath, data);
         break;
       case "Artwork":
-        downloadArtwork(folderPath, data);
+        await downloadArtwork(folderPath, data);
         break;
     }
-  });
+  }
 };
 
 const downloadStats = async (folderPath, data) => {
@@ -67,8 +67,8 @@ const downloadSprites = async (folderPath, data) => {
     }
   }
 
-  await Promise.all(
-    Object.entries(filteredSprites).map(async ([key, value]) => {
+  const savePromises = Object.entries(filteredSprites).map(
+    async ([key, value]) => {
       if (value !== null) {
         const response = await fetch(value);
         const imageBuffer = await response.arrayBuffer();
@@ -77,8 +77,9 @@ const downloadSprites = async (folderPath, data) => {
         await fs.writeFile(imagePath, Buffer.from(imageBuffer));
         console.log(`Saved: ${imageFileName}`);
       }
-    })
+    }
   );
+  await Promise.all(savePromises);
 };
 
 const downloadArtwork = async (folderPath, data) => {
@@ -100,16 +101,15 @@ const downloadArtwork = async (folderPath, data) => {
     }
   }
 
-  await Promise.all(
-    Object.entries(artwork).map(async ([key, value]) => {
-      const response = await fetch(value);
-      const imageBuffer = await response.arrayBuffer();
-      const imageFileName = `${key}.png`;
-      const imagePath = path.join(folderPath, imageFileName);
-      await fs.writeFile(imagePath, Buffer.from(imageBuffer));
-      console.log(`Saved: ${imageFileName}`);
-    })
-  );
+  const savePromises = Object.entries(artwork).map(async ([key, value]) => {
+    const response = await fetch(value);
+    const imageBuffer = await response.arrayBuffer();
+    const imageFileName = `${key}.png`;
+    const imagePath = path.join(folderPath, imageFileName);
+    await fs.writeFile(imagePath, Buffer.from(imageBuffer));
+    console.log(`Saved: ${imageFileName}`);
+  });
+  await Promise.all(savePromises);
 };
 
 export { getPokemonData };
