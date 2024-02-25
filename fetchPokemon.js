@@ -23,8 +23,7 @@ const getPokemonData = async (selected_pokemon, selected_info) => {
         downloadSprites(folderPath, data);
         break;
       case "Artwork":
-        console.log("=====ARTWORK=====");
-        console.log(data.sprites.other["official-artwork"]);
+        downloadArtwork(folderPath, data);
         break;
     }
   });
@@ -78,6 +77,37 @@ const downloadSprites = async (folderPath, data) => {
         await fs.writeFile(imagePath, Buffer.from(imageBuffer));
         console.log(`Saved: ${imageFileName}`);
       }
+    })
+  );
+};
+
+const downloadArtwork = async (folderPath, data) => {
+  const artwork = data.sprites.other["official-artwork"];
+  //   console.log(artwork);
+  try {
+    await fs.access(folderPath);
+  } catch (error) {
+    if (error.code === "ENOENT") {
+      try {
+        await fs.mkdir(folderPath, { recursive: true });
+      } catch (err) {
+        console.error("Error creating folder:", err);
+        return;
+      }
+    } else {
+      console.error("Error accessing folder:", error);
+      return;
+    }
+  }
+
+  await Promise.all(
+    Object.entries(artwork).map(async ([key, value]) => {
+      const response = await fetch(value);
+      const imageBuffer = await response.arrayBuffer();
+      const imageFileName = `${key}.png`;
+      const imagePath = path.join(folderPath, imageFileName);
+      await fs.writeFile(imagePath, Buffer.from(imageBuffer));
+      console.log(`Saved: ${imageFileName}`);
     })
   );
 };
